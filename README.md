@@ -30,12 +30,12 @@ The project utilizes JavaScript for logic implementation, HTML for structure, an
 - In the web browser, the user is prompted to create an employee object
 - The displayed output should be as follows
 
-![screenshot-1](./Develop/assets/images/screenshot-1.png)
+![screenshot-1](./develop/assets/images/screenshot-1.png)
 
 ### Dev Tools Output
 - In the dev tools, you should see the following after creating an employee using a prompt
 
-![screenshot-2](./Develop/assets/images/screenshot-2.png)
+![screenshot-2](./develop/assets/images/screenshot-2.png)
 
 ## License and Usage:
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
