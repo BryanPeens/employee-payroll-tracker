@@ -3,29 +3,54 @@ const addEmployeesBtn = document.querySelector("#add-employees-btn");
 
 // ========================================================================== Get Employees
 // Collect employee data
+window.employees = []; // Initialize an empty array to store employee data
+
 const collectEmployees = function () {
   // TODO: Get user input to create and return an array of employee objects
-  let employees = []; // Initialize an empty array to store employee data
-
+  
   // Loop until the user decides to end it
   while (true) {
-    let firstName = prompt("Enter first name (or type 'done' to finish):"); // Prompt user to enter name
-    if (firstName.toLowerCase() === "done") break; // Exit loop if user enters 'done'
-
-    let lastName = prompt("Enter last name:"); // Prompt user to enter lastname
-    let salary = prompt("Enter salary:"); // Prompt user to enter salary
+    let firstName = prompt("Enter first name: "); // Prompt user to enter name
+    let lastName = prompt("Enter last name: "); // Prompt user to enter lastname
+    let salary = prompt("Enter salary: "); // Prompt user to enter salary
 
     // Create an object for the employee, using the data a user input
     let employee = {
       firstName: firstName,
       lastName: lastName,
-      salary: parseFloat(salary), // Convert salary to a float
+      salary: parseFloat(salary) || 0.0, // Convert salary to a float, undifined will be ignored and use 0 ( NaN || 0 ) 
     };
-    employees.push(employee); // Add the employee object to the array
+    window.employees.push(employee); // Add the employee object to the array
+
+    // use sortEmployee function to sort employee list
+    window.employees = sortEmployees(window.employees);
+
+    let doNext = confirm("Do you want to add another employee?"); // Prompt user to enter another employee
+    if (!doNext) {
+      break; // If not create another employee
+    }
   }
-  return employees; // Return the array of employee objects
-  console.log(employees);
+  console.log(window.employees);
+  return window.employees;
 };
+
+// Function to sort employees
+const sortEmployees = function(employeesArray) {
+
+  // order an array of objects with name
+  employeesArray.sort(function (employeeA, employeeB) {
+    if (employeeA.lastName < employeeB.lastName) {
+      return -1; // if employeeA lastname is earlier in the alphabet than employeeB, move to top
+    }
+    if (employeeA.lastName > employeeB.lastName) {
+      return 1; // if employeeA lastname is later in the alphabet than employeeB, move to back 
+    }
+    return 0; // equal stays at the same place
+  });
+
+  return employeesArray;
+}
+
 // ========================================================================== Average Salary
 // Display the average salary
 const displayAverageSalary = function (employeesArray) {
@@ -37,7 +62,7 @@ const displayAverageSalary = function (employeesArray) {
     totalSalary += employee.salary; // Update total salary with each employee's salary
   }
 
-  const averageSalary = totalSalary / employeesArray.length;
+  const averageSalary = totalSalary / (employeesArray.length || 1); // Do not divide by 0
   const displayAverage = document.querySelector("#average-salary"); // Display average salary in an element
 
   // Do formatting on the salary
